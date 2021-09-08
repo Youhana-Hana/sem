@@ -10,4 +10,8 @@ class DemoApplicationTests {
 	void contextLoads() throws Exception {
 	}
 
+	@Test
+	void contextLoads2() throws Exception {
+	}
+
 }
