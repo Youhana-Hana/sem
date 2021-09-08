@@ -43,12 +43,6 @@ semanticRelease {
         releaseAsset jar, contentType: 'application/zip'
         releaseAsset sourcesJar, label: 'the sources of the project', contentType: 'application/zip'
     }
-    releaseBranches {
-        include 'main'
-    }
-    branchNames {
-        include 'main'
-    }
 }
 
 jar {
