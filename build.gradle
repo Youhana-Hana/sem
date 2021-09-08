@@ -3,7 +3,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'de.gliderpilot.semantic-release' version '1.4.2'
     id 'java'
-    id 'maven-publish'
+    id 'application'
 }
 
 group = 'com.example'
@@ -23,17 +23,19 @@ test {
 }
 
 task sourcesJar(type: Jar) {
-    archiveClassifier = 'sources'
+    classifier = 'sources'
     from sourceSets.main.allSource
 }
 
+artifacts {
+    sourcesJar
+}
 project.ext.ghToken = project.hasProperty('ghToken') ? project.getProperty('ghToken') : System.getenv('GH_TOKEN') ?: null
 semanticRelease {
     repo {
         ghToken = project.ghToken
-        releaseAsset jar
-        // optionally set name, label and/or contentType
-        releaseAsset sourcesJar, name: "the-sources.jar", label: 'the sources jar', contentType: 'application/zip'
+        releaseAsset jar, contentType: 'application/zip'
+        releaseAsset sourcesJar, label: 'the sources of the project', contentType: 'application/zip'
     }
     releaseBranches {
         include 'main'
