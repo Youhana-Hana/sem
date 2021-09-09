@@ -7,10 +7,7 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-while read oldrev newrev refname; do
-  branch=$(git rev-parse --symbolic --abbrev-ref $refname)
-  echo "branch is $branch"
-  if [ "master" = "$branch" ]; then
+if [ `git rev-parse --abbrev-ref HEAD` == "master" ]; then
 
     commitTitle="$(cat $1 | head -n1)"
 
@@ -39,5 +36,5 @@ while read oldrev newrev refname; do
 
     exit 0
   fi
-done
+
 exit 0

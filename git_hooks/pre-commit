@@ -4,9 +4,7 @@ echo "run pre commit hook"
 
 set -e
 
-if [ `git rev-parse --abbrev-ref HEAD` == "master" ]; then
-   echo "development-script"
-fi
+
 
 echo "check tests"
 ./gradlew test
