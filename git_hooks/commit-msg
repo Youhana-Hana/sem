@@ -25,7 +25,6 @@ fi
 
 echo 'checking message for Rally id...'
 if ! echo "$commitTitle" | grep -qE ':(\s)?#[a-zA-Z0-9_]+\s\w+'; then
-then
   echo 'You did not link a Rally Ticket id!'
   echo 'NOT COMMITTED'
   exit 1
