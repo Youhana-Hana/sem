@@ -4,10 +4,9 @@ echo "run pre commit hook"
 
 set -e
 
-while read oldrev newrev refname; do
-  branch=$(git rev-parse --symbolic --abbrev-ref $refname)
-  echo "branch is $branch"
-done
+if [ `git rev-parse --abbrev-ref HEAD` == "master" ]; then
+   echo "development-script"
+fi
 
 echo "check tests"
 ./gradlew test
