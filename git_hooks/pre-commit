@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "run pre commit hook"
+
+set -e
+
+echo "check tests"
+./gradlew test

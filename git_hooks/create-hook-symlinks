@@ -1,0 +1,3 @@
+#!/bin/bash
+cp -fL ./git_hooks/commit-msg ./.git/hooks/commit-msg
+cp -fL ./git_hooks/pre-commit ./.git/hooks/pre-commit
