@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+echo 'checking commit message format...'
+
+if [ -z "$1" ]; then
+	echo "Missing argument (commit message). Did you try to run this manually?"
+	exit 1
+fi
+
+commitTitle="$(cat $1 | head -n1)"
+
+# ignore merge requests
+if echo "$commitTitle" | grep -qE "^Merge branch \'"; then
+	echo "Commit hook: ignoring branch merge"
+	exit 0
+fi
+
+# check semantic versioning scheme
+if ! echo "$commitTitle" | grep -qE '^(?:feat|fix|docs|refactor|perf|test|chore|build)\(?(?:\w+|\s|\-|_)?\)?:\s\w+'; then
+	echo "Your commit message did not follow semantic versioning: $commitTitle"
+	echo "Please see https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#commit-message-format"
+	echo 'NOT COMMITTED'
+	exit 1
+fi
+
+echo 'checking message for Rally id...'
+if ! echo "$commitTitle" | grep -qE ':(\s)?#[a-zA-Z0-9_]+\s\w+'; then
+then
+  echo 'You did not link a Rally Ticket id!'
+  echo 'NOT COMMITTED'
+  exit 1
+fi
+
+echo 'Well done, commit successful'
+
+exit 0
