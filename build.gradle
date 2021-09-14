@@ -6,12 +6,10 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'de.gliderpilot.semantic-release' version '1.4.2'
     id 'java'
-    id 'application'
 }
 
 group = 'com.example'
 sourceCompatibility = '1.8'
-mainClassName = "com.example.demo.DemoApplication"
 
 repositories {
     mavenCentral()
@@ -42,16 +40,6 @@ release {
         selector: { SemVerStrategyState state ->
             !state.repoDirty && state.currentBranch.name == "main" }
     )
-    // add a second strategy to create release candidates from 'rc/.*' branches
-//    versionStrategy semanticRelease.releaseStrategy.copyWith(
-//            // the type is important, without type you would again replace the default strategy
-//            type: 'main',
-//            selector: { SemVerStrategyState state ->
-//                !state.repoDirty && state.currentBranch.name ==~ /main/ &&
-//                        semanticRelease.semanticStrategy.canRelease(state) && project.gradle.startParameter.taskNames.find { it == 'release' }
-//            },
-//            preReleaseStrategy: StrategyUtil.all({ it.copyWith(inferredPreRelease: 'main') } as PartialSemVerStrategy, Strategies.PreRelease.COUNT_INCREMENTED)
-//    )
 }
 
 semanticRelease {
@@ -60,18 +48,8 @@ semanticRelease {
         releaseAsset jar, contentType: 'application/zip'
         releaseAsset sourcesJar, label: 'the sources of the project', contentType: 'application/zip'
     }
-//    releaseBranches {
-//        include 'main'
-//    }
 }
 
-jar {
-    manifest {
-        attributes([
-                "main-class": mainClassName
-        ])
-    }
-}
 afterEvaluate {
     println version
 }
