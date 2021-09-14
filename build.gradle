@@ -38,10 +38,10 @@ artifacts {
 project.ext.ghToken = project.hasProperty('ghToken') ? project.getProperty('ghToken') : System.getenv('GH_TOKEN') ?: null
 
 release {
-    versionStrategy semanticRelease.releaseStrategy.copyWith{
+    versionStrategy semanticRelease.releaseStrategy.copyWith(
         selector: { SemVerStrategyState state ->
-                state.currentBranch.name == "main" }
-        }
+            !state.repoDirty && state.currentBranch.name == "main" }
+    )
     // add a second strategy to create release candidates from 'rc/.*' branches
 //    versionStrategy semanticRelease.releaseStrategy.copyWith(
 //            // the type is important, without type you would again replace the default strategy
@@ -60,9 +60,9 @@ semanticRelease {
         releaseAsset jar, contentType: 'application/zip'
         releaseAsset sourcesJar, label: 'the sources of the project', contentType: 'application/zip'
     }
-    releaseBranches {
-        include 'main'
-    }
+//    releaseBranches {
+//        include 'main'
+//    }
 }
 
 jar {
